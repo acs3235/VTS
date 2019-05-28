@@ -374,6 +374,10 @@ namespace Vts.MonteCarlo
             /// Tissue cude with multiple tetrahedra
             /// </summary>
             "MultiTetrahedronInCube",
+            /// <summary>
+            /// Tissue slab with embedded infinite cylinder
+            /// </summary>
+            "SingleInfiniteCylinder"
         };
     }
     
@@ -385,7 +389,8 @@ namespace Vts.MonteCarlo
             "Layer",
             "Ellipsoid",
             "Cylinder",
-            "Tetrahedron"
+            "Tetrahedron",
+            "InfiniteCylinder"
         };
     }
 

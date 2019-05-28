@@ -120,6 +120,11 @@ namespace Vts.MonteCarlo.Tissues
                 hit = true;
             }
             return hit;
-        }        
+        }
+
+        public Direction SurfaceNormal(Position position)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
