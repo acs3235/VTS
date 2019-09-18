@@ -247,6 +247,9 @@ namespace Vts.MonteCarlo
                 // 3D Ellipsoidal volume sources: custom
                 "CustomVolumetricEllipsoidal",
 
+                // Fluorescence Emission Volume Sources
+                "FluorescenceEmissionAOfXAndYAndZ",
+
                 // ...others, based on Fluence or Radiance?                  
             };
     }
@@ -321,7 +324,10 @@ namespace Vts.MonteCarlo
             // Tissue cude with multiple tetrahedra
             "MultiTetrahedronInCube",
             // Tissue slab with embedded infinite cylinder
-            "SingleInfiniteCylinder"
+            "SingleInfiniteCylinder",
+            // Multiple (2 right now) concentric infinite cylinder
+            "MultiConcentricInfiniteCylinder"
+
         };
     }
     
@@ -411,11 +417,16 @@ namespace Vts.MonteCarlo
             "ReflectedDynamicMTOfRhoAndSubregionHist",
             // Reflected dynamic momentum transfer as a function of x, y and tissue region with histogram of MT
             "ReflectedDynamicMTOfXAndYAndSubregionHist",
+            // Reflected dynamic momentum transfer as a function of spatial frequency fx and
+            // tissue region with histogram of MT
+            "ReflectedDynamicMTOfFxAndSubregionHist",
             // Transmitted dynamic momentum transfer as a function of source-detector separation (rho) and
             // tissue region with histogram of MT
             "TransmittedDynamicMTOfRhoAndSubregionHist",
             // Transmitted dynamic momentum transfer as a function of x, y and tissue region with histogram of MT
-            "TransmittedDynamicMTOfXAndYAndSubregionHist",    
+            "TransmittedDynamicMTOfXAndYAndSubregionHist",
+            // Transmitted dynamic momentum transfer as a function of fx and tissue region with histogram of MT
+            "TransmittedDynamicMTOfFxAndSubregionHist",
             // Reflected subregion time as a function of source-detector separation (rho) and tissue region 
             "ReflectedTimeOfRhoAndSubregionHist",
             // Surface radiance as a function of source-detector separation (rho)
@@ -554,15 +565,26 @@ namespace Vts.MonteCarlo
         /// <summary>
         /// Reflected dynamic momentum transfer as a function of x, y and tissue region with histogram of MT
         /// </summary>
-        public static string ReflectedDynamicMTOfXAndYAndSubregionHist { get { return "ReflectedDynamicMTOfRhoAndSubregionHist"; } }
+        public static string ReflectedDynamicMTOfXAndYAndSubregionHist { get { return "ReflectedDynamicMTOfXAndYAndSubregionHist"; } }
         /// <summary>
-        /// Reflected dynamic momentum transfer as a function of source-detector separation (rho) and tissue region with histogram of MT
+        /// Reflected dynamic momentum transfer as a function of spatial frequency fx and tissue region with histogram of MT
+        /// </summary>
+        public static string ReflectedDynamicMTOfFxAndSubregionHist
+        {
+            get { return "ReflectedDynamicMTOfFxAndSubregionHist"; }
+        }
+        /// <summary>
+        /// Transmitted dynamic momentum transfer as a function of rho and tissue region with histogram of MT
         /// </summary>
         public static string TransmittedDynamicMTOfRhoAndSubregionHist { get { return "TransmittedDynamnicMTOfRhoAndSubregionHist"; } }
         /// <summary>
-        /// Reflected dynamic momentum transfer as a function of x, y and tissue region with histogram of MT
+        /// Transmitted dynamic momentum transfer as a function of x, y and tissue region with histogram of MT
         /// </summary>
         public static string TransmittedDynamicMTOfXAndYAndSubregionHist { get { return "TransmittedDynamicMTOfXAndYAndSubregionHist"; } }
+        /// <summary>
+        /// Transmitted dynamic momentum transfer as a function of fx and tissue region with histogram of MT
+        /// </summary>
+        public static string TransmittedDynamicMTOfFxAndSubregionHist { get { return "TransmittedDynamicMTOfFxAndSubregionHist";} }
         /// <summary>
         /// Reflected subregion time as a function of source-detector separation (rho) and tissue region 
         /// </summary>
