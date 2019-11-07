@@ -250,12 +250,17 @@ namespace Vts.MonteCarlo
                 var volumeVBs = _virtualBoundaryController.VirtualBoundaries.Where(
                     v => v.VirtualBoundaryType == VirtualBoundaryType.GenericVolumeBoundary).ToList();
 
+                var taskList = new List<Task>();
                 for (long n = 1; n <= _numberOfPhotons; n++)
                 {
-                    var taskList = new List<Task>();
-                    taskList.Add(Task.Factory.StartNew(() => RunOnePhoton(n, volumeVBs)));
-                    Task.WaitAll(taskList.ToArray());
-
+                    if (_numberOfPhotons > 10000) // 10000 minimum value due to unit tests e.g. AnalogBidir
+                    {
+                        taskList.Add(Task.Factory.StartNew(() => RunOnePhoton(n, volumeVBs)));
+                    }
+                    else
+                    {
+                        RunOnePhoton(n, volumeVBs);
+                    }
                     //if (_isCancelled)
                     //{
                     //    return;
@@ -329,6 +334,11 @@ namespace Vts.MonteCarlo
                     //}
 
                 } /* end of for n loop */
+
+                if (_numberOfPhotons > 10000) 
+                {
+                    Task.WaitAll(taskList.ToArray());
+                }
             }
             finally
             {
