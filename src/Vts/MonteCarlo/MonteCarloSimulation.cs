@@ -250,94 +250,21 @@ namespace Vts.MonteCarlo
                 var volumeVBs = _virtualBoundaryController.VirtualBoundaries.Where(
                     v => v.VirtualBoundaryType == VirtualBoundaryType.GenericVolumeBoundary).ToList();
 
-                var taskList = new List<Task>();
-                for (long n = 1; n <= _numberOfPhotons; n++)
+                if (_numberOfPhotons > 10000)
                 {
-                    if (_numberOfPhotons > 10000) // 10000 minimum value due to unit tests e.g. AnalogBidir
+                    var taskList = new List<Task>();
+                    for (long n = 1; n <= _numberOfPhotons; n++)
                     {
                         taskList.Add(Task.Factory.StartNew(() => RunOnePhoton(n, volumeVBs)));
                     }
-                    else
+                    Task.WaitAll(taskList.ToArray());
+                }
+                else
+                {
+                    for (long n = 1; n <= _numberOfPhotons; n++)
                     {
                         RunOnePhoton(n, volumeVBs);
                     }
-                    //if (_isCancelled)
-                    //{
-                    //    return;
-                    //}
-
-                    //// todo: bug - num photons is assumed to be over 10 :)
-                    //if (n % (_numberOfPhotons / 10) == 0)
-                    //{
-                    //    DisplayStatus(n, _numberOfPhotons);
-                    //}
-
-                    //var photon = _source.GetNextPhoton(_tissue);
-
-                    //do
-                    //{ /* begin do while  */
-                    //    photon.SetStepSize(); // only calls rng if SLeft == 0.0
-
-                    //    IVirtualBoundary closestVirtualBoundary;
-
-                    //    BoundaryHitType hitType = Move(photon, out closestVirtualBoundary);
-
-                    //    // todo: consider moving actual calls to Tally after do-while
-                    //    // for each "hit" virtual boundary, tally respective detectors if exist
-                    //    if ((hitType == BoundaryHitType.Virtual) &&
-                    //        (closestVirtualBoundary.DetectorController != null))
-                    //    {
-                    //        closestVirtualBoundary.DetectorController.Tally(photon);
-                    //    }
-
-                    //    // kill photon for various reasons, including possible VB crossings
-                    //    photon.TestDeath();
-
-                    //    // check if virtual boundary 
-                    //    if (hitType == BoundaryHitType.Virtual)
-                    //    {
-                    //        continue;
-                    //    }
-
-                    //    if (hitType == BoundaryHitType.Tissue)
-                    //    {
-                    //        photon.CrossRegionOrReflect();
-                    //        continue;
-                    //    }
-
-                    //    photon.Absorb(); // can be added to TestDeath?
-                    //    if (!photon.DP.StateFlag.HasFlag(PhotonStateType.Absorbed))
-                    //    {
-                    //        photon.Scatter();
-                    //    }
-
-                    //} while (photon.DP.StateFlag.HasFlag(PhotonStateType.Alive)); /* end do while */
-
-                    ////_detectorController.TerminationTally(photon.DP);
-
-                    //if (_input.Options.Databases.Count() > 0)
-                    //{
-                    //    WriteToDatabases(doPMC, photon);
-                    //}
-
-                    //// note History has possibly 2 more DPs than linux code due to 
-                    //// final crossing of PseudoReflectedTissueBoundary and then
-                    //// PseudoDiffuseReflectanceVB
-                    //foreach (var vb in volumeVBs)
-                    //{
-                    //    vb.DetectorController.Tally(photon); // dc: this should use the optimized loop now...
-                    //}
-
-                    //if (TrackStatistics)
-                    //{
-                    //    _simulationStatistics.TrackDeathStatistics(photon.DP);
-                    //}
-
-                } /* end of for n loop */
-
-                if (_numberOfPhotons > 10000) 
-                {
-                    Task.WaitAll(taskList.ToArray());
                 }
             }
             finally
