@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using NLog.LayoutRenderers;
 
 namespace Vts.MonteCarlo
 {
@@ -260,6 +259,18 @@ namespace Vts.MonteCarlo
         /// Total Absorbed Energy Tally Count
         /// </summary>
         public long Atot_TallyCount { get { return ((long)((dynamic)ResultsDictionary[_detectorResults.Where(d => d.TallyType == "ATotal").First().Name]).TallyCount); } }
+        /// <summary>
+        /// Total Absorbed Energy in bounding volume
+        /// </summary>
+        public double AtotBV { get { return ((double)((dynamic)ResultsDictionary[_detectorResults.Where(d => d.TallyType == "ATotalBoundingVolume").First().Name]).Mean); } }
+        /// <summary>
+        /// Total Absorbed Energy in bounding volume 2nd moment
+        /// </summary>
+        public double AtotBV2 { get { return ((double)((dynamic)ResultsDictionary[_detectorResults.Where(d => d.TallyType == "ATotalBoundingVolume").First().Name]).SecondMoment); } }
+        /// <summary>
+        /// Total Absorbed Energy in bounding volume Tally Count
+        /// </summary>
+        public long AtotBV_TallyCount { get { return ((long)((dynamic)ResultsDictionary[_detectorResults.Where(d => d.TallyType == "ATotalBoundingVolume").First().Name]).TallyCount); } }
         /// <summary>
         /// Absorbed Energy as a function of rho and z
         /// </summary>
@@ -687,6 +698,18 @@ namespace Vts.MonteCarlo
         /// perturbation MC Reflectance as a function of rho and time Tally Count
         /// </summary>
         public long pMC_R_rt_TallyCount { get { return ((long)((dynamic)ResultsDictionary[_detectorResults.Where(d => d.TallyType == "pMCROfRhoAndTime").First().Name]).TallyCount); } }
+        /// <summary>
+        /// perturbation MC Reflectance as a function of x and y
+        /// </summary>
+        public double[,] pMC_R_xy { get { return ((double[,])((dynamic)ResultsDictionary[_detectorResults.Where(d => d.TallyType == "pMCROfXAndY").First().Name]).Mean); } }
+        /// <summary>
+        /// perturbation MC Reflectance as a function of x and y 2nd moment
+        /// </summary>
+        public double[,] pMC_R_xy2 { get { return ((double[,])((dynamic)ResultsDictionary[_detectorResults.Where(d => d.TallyType == "pMCROfXAndY").First().Name]).SecondMoment); } }
+        /// <summary>
+        /// perturbation MC Reflectance as a function of x and y Tally Count
+        /// </summary>
+        public long pMC_R_xy_TallyCount { get { return ((long)((dynamic)ResultsDictionary[_detectorResults.Where(d => d.TallyType == "pMCROfXAndY").First().Name]).TallyCount); } }
         /// <summary>
         /// differential MC Reflectance as a function of rho wrt to mua
         /// </summary>
