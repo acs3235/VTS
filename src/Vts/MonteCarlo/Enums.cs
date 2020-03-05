@@ -434,8 +434,6 @@ namespace Vts.MonteCarlo
             "FluenceOfXAndYAndZAndOmega",
             // Fluence as a function of a tetrahedral mesh
             "FluenceOfTetrahedralMesh",
-            // Fluence as a function of rho, z and omega
-            "FluenceOfRhoAndZAndOmega",
             // Fluence as a function of fx and z
             "FluenceOfFxAndZ",
             // Absorbed energy as a function of source-detector separation (rho) and tissue depth (Z)
