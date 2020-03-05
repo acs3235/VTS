@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using Vts.Common;
-using Vts.MonteCarlo.Tissues;
 
 namespace Vts.MonteCarlo.Tissues
 {
@@ -13,7 +12,6 @@ namespace Vts.MonteCarlo.Tissues
     public class TetrahedralMeshData 
     {
         private IList<TriangleRegion> _triangles; // this is triangleList 
-        private IList<int> _boundaryTriangles;
 
         /// <summary>
         /// Creates an instance of a TetrahedronMeshData
@@ -26,10 +24,30 @@ namespace Vts.MonteCarlo.Tissues
             }
             else // load mesh data from parameter regions
             {
+                // set tetrahedron regions
                 TetrahedronRegions = regions.Select(region => (TetrahedronTissueRegion)region).ToList();
-                // the following distinct does not eliminate duplicates, but can work with duplicated list for now
-                OptPropertiesList = (regions.Select(region => region.RegionOP)).Distinct().ToList();
-                Nodes = TetrahedronRegions.SelectMany(t => t.Triangles).SelectMany(s => s.Nodes).ToList();
+                // set OPs in same order
+                OptPropertiesList = (regions.Select(region => region.RegionOP)).ToList();
+                // want *distinct* vertices defined, back out from TetrahedronRegions
+                Nodes = TetrahedronRegions.SelectMany(t => t.Triangles).SelectMany(s => s.Nodes).Distinct().ToList();
+                // go through tetrahedron region triangles and set node indices to distinct list
+                // there must be a better way to do this, don't know right now :(
+                for (int i = 0; i < TetrahedronRegions.Count - 1; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        for (int l = 0; l < 3; l++) 
+                        {
+                            for (int k = 0; k < Nodes.Count - 1; k++)
+                            {
+                                if (TetrahedronRegions[i].Triangles[j].Nodes[l] == Nodes[k])
+                                {
+                                    TetrahedronRegions[i].Triangles[j].NodeIndices[l] = k;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             InitializeTriangleData();  // this performs PreProcessor processing
         }
@@ -70,7 +88,7 @@ namespace Vts.MonteCarlo.Tissues
                     _triangles[k].TetrahedronIndices[1] = -1; // -1 means null
                 }
             }
-            // not sure if following 3 lines correct
+            // following code matches timos
             _triangles[4 * (TetrahedronRegions.Count - 1)].TetrahedronIndices[0] = Nodes.Count;
             _triangles[4 * (TetrahedronRegions.Count - 1)].TetrahedronIndices[1] = Nodes.Count;
             _triangles[4 * (TetrahedronRegions.Count - 1)].TetrahedronIndices[2] = Nodes.Count;
@@ -109,8 +127,9 @@ namespace Vts.MonteCarlo.Tissues
                 ++hole;
             } while (currentTriangle < 4 * TetrahedronRegions.Count);
             // find internal/boundary triangles and update containing tetra info
-            int index = 1;
+            int index = 0;  // timos code sets this to 1
             var numberOfTriangles = hole;
+            var _boundaryTriangles = new int[numberOfBoundaryTriangles + 1];
             int tempNumberOfBoundaryTriangles = 0;
             for (int i = 0; i < numberOfTriangles; i++)
             {
@@ -129,10 +148,10 @@ namespace Vts.MonteCarlo.Tissues
                 }
                 for (int j = 0; j < _triangles[index].NumberOfContainingTetrahedrons; j++)
                 {
-                    for (int k = 0; k <= 3; k++)
+                    for (int k = 0; k < 4; k++)
                     {
                         // check that triangle assigned to correct number of tetras
-                        if ((_triangles[index].TetrahedronIndices[j] < 1) ||
+                        if ((_triangles[index].TetrahedronIndices[j] < 0) ||  // timos: < 1
                             (_triangles[index].TetrahedronIndices[j] > _triangles[index].NumberOfContainingTetrahedrons))
                         {
                             throw new Exception("tetrahedral mesh is not correct");

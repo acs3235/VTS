@@ -18,7 +18,7 @@ namespace Vts.MonteCarlo.Tissues
         {
             Nodes = nodes;
             NodeIndices = new int[4];
-            TetrahedronIndices = new int[2] { -1, -1 }; // -1 denotes not set
+            TetrahedronIndices = new int[3] { -1, -1, -1 }; // -1 denotes not set
             InitializeTriangleRegion(nodes);
         }
 
