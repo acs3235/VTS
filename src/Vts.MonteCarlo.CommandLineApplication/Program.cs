@@ -96,6 +96,7 @@ namespace Vts.MonteCarlo.CommandLineApplication
             List<string> inFiles = new List<string>();
             string outName = "";
             string outPath = "";
+            string dataName = "";
             bool infoOnlyOption = false;
             IList<ParameterSweep> paramSweep = new List<ParameterSweep>();
 
@@ -147,6 +148,10 @@ namespace Vts.MonteCarlo.CommandLineApplication
                    outPath = val.First();
                    logger.Info(() => "output path specified as " + outPath);
                    //MonteCarloSetup.OutputFolder = val.First();
+               }),
+               new CommandLine.Switch("datafile", val =>
+               {
+                   dataName = val.First();
                }),
                new CommandLine.Switch("paramsweep", val =>
                {
