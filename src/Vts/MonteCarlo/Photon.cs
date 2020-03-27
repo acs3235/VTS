@@ -13,6 +13,7 @@ namespace Vts.MonteCarlo
     /// </summary>
     public class Photon
     {
+        private const int MAX_DATA_NUM = 20000; //added by Andrew Stier 3/27/20
         // reducing any of the following values might result in unit tests not passing
         // should we dynamically set MAX_HISTORY_PTS and MAX_PHOTON_TIME?  derive one from other?
         private const int MAX_HISTORY_PTS = 300000; // 300000 * [1/(5/mm)] = 60000 mm
@@ -290,16 +291,16 @@ namespace Vts.MonteCarlo
             double cost, sint;    /* cosine and sine of theta */
             double cosp, sinp;    /* cosine and sine of phi */
             double psi;
+            int data_index;
 
             if (g == 0.0)
                 cost = 2 * _rng.NextDouble() - 1;
             else
             {
-                double temp = (1 - g * g) / (1 - g + 2 * g * _rng.NextDouble());
-                cost = (1 + g * g - temp * temp) / (2 * g);
-                if (cost < -1) cost = -1;
-                else if (cost > 1) cost = 1;
+                data_index = (int) _rng.NextDouble() * MAX_DATA_NUM;
+                cost = data[data_index];
             }
+            
             sint = Math.Sqrt(1.0 - cost * cost);
 
             psi = 2.0 * Math.PI * _rng.NextDouble();
