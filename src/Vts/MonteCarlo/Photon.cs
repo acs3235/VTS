@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using Vts.Common;
 using Vts.MonteCarlo.Factories;
@@ -298,7 +299,9 @@ namespace Vts.MonteCarlo
             else
             {
                 data_index = (int) _rng.NextDouble() * MAX_DATA_NUM;
-                cost = data[data_index];
+                //cost = data[data_index];
+                cost = double.Parse(File.ReadLines("data.txt").Skip(data_index-1).Take(1).First());
+                
             }
             
             sint = Math.Sqrt(1.0 - cost * cost);
