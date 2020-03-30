@@ -72,7 +72,7 @@ function RunMCw1gamma1g_updated(gamma,musp_vs,g1)
     
 %     addpath('/Users/andrew/anaconda/bin:/scripts/ipynb_drop_output:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/share/dotnet:/opt/X11/bin:/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Library/Frameworks/Mono.framework/Versions/6.8.0/lib/mono')
     addpath('/Library/Frameworks/Mono.framework/Versions/6.8.0/include/mono-2.0/mono')
-    command_text = strcat('mono mc.exe infile=infile_one_layer_RofRho.txt outname=RofRhoGamma_',num2str(gamma),' paramsweeplist=mus1,',sweeptext)
+    command_text = strcat('mono mc.exe outpath=Results infile=infile_one_layer_RofRho.txt outname=RofRhoGamma_',num2str(gamma),' paramsweeplist=mus1,',sweeptext)
     
     %Run GPUMCML
     
