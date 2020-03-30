@@ -1,7 +1,7 @@
 function [R,rho] = parse_R_rho(data_name)
 % script for loading Monte Carlo results
 
-clear variables;
+% clear variables;
 dbstop if error;
 slash = filesep;  % get correct path delimiter for platform
 
@@ -66,8 +66,10 @@ outdir = '/Users/andrew/Downloads/vts/src/Vts.MonteCarlo.CommandLineApplication/
 for mci = 1:length(datanames)
   dataname = datanames{mci};
   results = loadMCResults(outdir, dataname);
-  rho = results{di}.ROfRho.Rho_Midpoints; 
-  R = results{di}.ROfRho.Mean;
+  for di = 1:size(results, 2)
+      rho = results{di}.ROfRho.Rho_Midpoints; 
+      R = results{di}.ROfRho.Mean;
+  end
 %   
 %   for di = 1:size(results, 2)
 %     if isfield(results{di}, 'RDiffuse') && show.RDiffuse

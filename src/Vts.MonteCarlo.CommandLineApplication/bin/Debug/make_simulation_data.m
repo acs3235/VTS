@@ -3,12 +3,13 @@ clear all; close all; clc
 % gammas = linspace(0.95,1.27,6)
 % musp_vs = linspace(1.9,3.8,6) * 10 %cm^-1
 
-addpath([cd slash 'jsonlab']);
+% addpath([cd slash 'jsonlab']);
 
 
 
-gs = [.9]
-
+gs = [.9];
+gammas = [1.5];
+musp_vs = [2,3,4];
 
 %%
 
@@ -38,7 +39,9 @@ for gam = gammas
             if gam > 1 + g
                 continue
             end
-            data = load(['Test/Simulation_gamma' num2str(gam) '_musp_' num2str(musp_v_cm) '_g_' num2str(g) '_mua_' num2str(mua_e) '.mat']);
+            
+            dataname = strcat('RofRhoGamma_',num2str(gam),'_mus1_',num2str(musp_v_cm));
+            [R,r] = parse_R_rho(dataname);
 
             fx = [.01 .025 .05:.05:1.8];
 %             fx = [0:.05:1];
@@ -52,8 +55,7 @@ for gam = gammas
 %             ylabel('R (cm^-^2)')
 
 
-            r_log = [data.dr:data.dr:data.dr*data.Ndr] * 10;
-            R_log = data.MCoutput.refl_r * 1/100;
+           
 
 %             figure(1)
 %             semilogy(r_log, R_log)
@@ -64,13 +66,13 @@ for gam = gammas
 
 
 %             figure(2)
-            SFDR_1Y = ht(R_log,r_log,fx*2*pi);
+            SFDR_1Y = ht(R,r,fx*2*pi);
 %             semilogy(fx,SFDR_1Y,'DisplayName',['mu ' num2str(musp_v_cm) ' gamma ' num2str(gam) ' g ' num2str(g)])
 %             hold all;
 %             xlabel('f (1/mm)')
 %             ylabel('R')
 
-            save(['Test/SFDR/SFDR_mu_' num2str(musp_v_cm) '_gamma_' num2str(gam) '_g_' num2str(g) '_mua_' num2str(mua_e) '.mat'],'SFDR_1Y');
+            save(['Results/SFDR/SFDR_mu_' num2str(musp_v_cm) '_gamma_' num2str(gam) '_g_' num2str(g) '.mat'],'SFDR_1Y');
         end
     end
 end
