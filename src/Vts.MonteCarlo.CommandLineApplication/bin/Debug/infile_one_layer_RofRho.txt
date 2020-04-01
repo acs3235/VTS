@@ -1,6 +1,6 @@
 {
   "OutputName": "one_layer_RofRho",
-  "N": 100,
+  "N": 10000000,
   "Options": {
     "Seed": 0,
     "RandomNumberGeneratorType": "MersenneTwister",
@@ -46,21 +46,21 @@
         "TissueRegionType": "Layer",
         "ZRange": {
           "Start": 0.0,
-          "Stop": 100.0,
+          "Stop": 1000000000.0,
           "Count": 2
         },
         "RegionOP": {
           "Mua": 0.01,
           "Mus": 5.0000000000000009,
-          "G": 0.8,
-          "N": 1.4,
+          "G": 0.9,
+          "N": 1.33,
           "Musp": 1.0
         }
       },
       {
         "TissueRegionType": "Layer",
         "ZRange": {
-          "Start": 100.0,
+          "Start": 1000000000.0,
           "Stop": "Infinity",
           "Count": 2
         },
@@ -80,8 +80,8 @@
 	
       "Rho": {
         "Start": 0.0,
-        "Stop": 10.0,
-        "Count": 101
+        "Stop": 150.0,
+        "Count": 1.5E5
       },
       "TallyType": "ROfRho",
       "Name": "ROfRho",
