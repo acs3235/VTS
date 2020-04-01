@@ -15,7 +15,7 @@ datanames = { data_name };
 % datanames = { 'results_mua0.1musp1.0' 'results_mua0.1musp1.1' }; %...etc
 
 % outdir = 'C:\Projects\vts\src\Vts.MonteCarlo.CommandLineApplication\bin\Release';
-outdir = '/Users/andrew/Downloads/vts/src/Vts.MonteCarlo.CommandLineApplication/bin/Debug/Results';
+outdir = '/home/acs3235/VTS/src/Vts.MonteCarlo.CommandLineApplication/bin/Debug/Results';
 
 % show.RDiffuse =                 1;
 % show.ROfRho =                   1;
