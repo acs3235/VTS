@@ -1,4 +1,5 @@
 function [R,rho] = parse_R_rho(data_name)
+% outdir = '/Users/andrew/Documents/BMIL/vts/src/Vts.MonteCarlo.CommandLineApplication/bin/Debug/Results';
 % script for loading Monte Carlo results
 
 % clear variables;
