@@ -8,8 +8,8 @@ clear all; close all; clc
 
 
 gs = [.9];
-gammas = [1.5];
-musp_vs = [2,3,4];
+gammas = [0.95];
+musp_vs = [1];
 
 %%
 
